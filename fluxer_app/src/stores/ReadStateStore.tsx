@@ -630,6 +630,8 @@ class ReadStateStore {
 		} else if (channelId != null && !this.pendingGlobalRecompute) {
 			const entry = this.states.get(channelId as ChannelId);
 			const guildId = entry?.guildId ?? null;
+			if (UserGuildSettingsStore.isGuildOrChannelMuted(guildId, channelId))
+				return;
 			this.pendingChanges.set(channelId as ChannelId, guildId as GuildId | null);
 		}
 		this.updateCounter++;
